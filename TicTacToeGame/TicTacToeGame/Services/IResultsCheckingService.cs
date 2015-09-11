@@ -3,6 +3,7 @@
     public interface IResultsCheckingService
     {
         bool CheckForAnyResult();
+        bool CheckForAWin();
         bool CheckForDraw();
     }
 }
