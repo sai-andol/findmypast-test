@@ -1,4 +1,6 @@
-﻿namespace TicTacToeGame
+﻿using TicTacToeGame.Domain;
+
+namespace TicTacToeGame.Factories
 {
     public class PlayerFactory : IPlayerFactory
     {

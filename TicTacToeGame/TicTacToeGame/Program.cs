@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using TicTacToeGame.Domain;
+using TicTacToeGame.Factories;
 
 namespace TicTacToeGame
 {
@@ -10,7 +11,8 @@ namespace TicTacToeGame
         {
             Introduction();
             var players = RegisterPlayers();
-
+            StartANewGame(players);
+            DoYouWantToPlayAgain(players);
         }
 
         private static void Introduction()
@@ -46,10 +48,37 @@ namespace TicTacToeGame
             var playerFactory = new PlayerFactory();
             var firstPlayer = playerFactory.Create(player1Name, player1Symbol.KeyChar);
             var secondPlayer = playerFactory.Create(player2Name, player2Symbol.KeyChar);
+            Console.WriteLine();
             Console.WriteLine("Details registered. Press any key to begin playing!");
             Console.ReadKey(false);
 
             return new List<IPlayer> { firstPlayer, secondPlayer};
+        }
+
+        private static void StartANewGame(List<IPlayer> players)
+        {
+            IBoard board = new Board();
+            var game = new Game(board);
+            game.Play(players);
+        }
+
+        private static void DoYouWantToPlayAgain(List<IPlayer> players)
+        {
+            bool wantToPlay;
+            do
+            {
+                Console.WriteLine("Do you want to play an another game?");
+                Console.WriteLine("Please enter 'Y' or else Press enter to quit.");
+                var wantToPlayAgain = Console.ReadKey();
+                Console.WriteLine();
+                wantToPlay = wantToPlayAgain.Key.ToString().ToUpperInvariant() == "Y";
+                Console.Clear();
+                if (wantToPlay)
+                {
+                    StartANewGame(players);
+                }
+
+            } while (wantToPlay);
         }
     }
 }

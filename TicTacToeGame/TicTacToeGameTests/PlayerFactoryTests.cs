@@ -1,5 +1,7 @@
 ﻿using NUnit.Framework;
 using TicTacToeGame;
+using TicTacToeGame.Domain;
+using TicTacToeGame.Factories;
 
 namespace TicTacToeGameTests
 {

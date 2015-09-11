@@ -1,4 +1,4 @@
-namespace TicTacToeGame
+namespace TicTacToeGame.Domain
 {
     public class Player : IPlayer
     {
