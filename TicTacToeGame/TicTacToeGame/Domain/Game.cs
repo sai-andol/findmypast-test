@@ -18,55 +18,66 @@ namespace TicTacToeGame.Domain
 
         public void Play(List<IPlayer> players)
         {
-            int currentPlayer = 1;
-            var firstPlayer = players.First();
-            var secondPlayer = players.Last();
-            do
+            try
             {
-                Console.Clear();
-                _board.Render();
-                if (currentPlayer % 2 == 0)
+                int currentPlayer = 1;
+                var firstPlayer = players.First();
+                var secondPlayer = players.Last();
+                do
                 {
-                    Console.WriteLine("{0}, make your move.", secondPlayer.Name);
-                    int positionToMove = Convert.ToInt32(Console.ReadLine());
-                    if (_board.BoardPositions[positionToMove] != firstPlayer.SymbolOnTheBoard &&
-                        _board.BoardPositions[positionToMove] != secondPlayer.SymbolOnTheBoard)
+                    Console.Clear();
+                    _board.Render();
+                    if (currentPlayer % 2 == 0)
                     {
-                        secondPlayer.MakeMove(positionToMove);
+                        Console.WriteLine("{0}, your turn, make your move by entering your boardposition:",
+                            secondPlayer.Name);
+                        int positionToMove = Convert.ToInt32(Console.ReadLine());
+                        if (_board.BoardPositions[positionToMove] != firstPlayer.SymbolOnTheBoard &&
+                            _board.BoardPositions[positionToMove] != secondPlayer.SymbolOnTheBoard)
+                        {
+                            secondPlayer.MakeMove(positionToMove);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Sorry the position {0} is already taken! Try a diffrent position...",
+                                positionToMove);
+                        }
+                        currentPlayer++;
                     }
                     else
                     {
-                        Console.WriteLine("Sorry the position {0} is already taken! Try a diffrent position...", positionToMove);
+                        Console.WriteLine("{0}, your turn, make your move by entering your boardposition:",
+                            firstPlayer.Name);
+                        int positionToMove = Convert.ToInt32(Console.ReadLine());
+                        if (_board.BoardPositions[positionToMove] != firstPlayer.SymbolOnTheBoard &&
+                            _board.BoardPositions[positionToMove] != secondPlayer.SymbolOnTheBoard)
+                        {
+                            firstPlayer.MakeMove(positionToMove);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Sorry the position {0} is already taken! Try a diffrent position...",
+                                positionToMove);
+                        }
+                        currentPlayer++;
                     }
-                    currentPlayer++;
+                } while (!_resultsCheckingService.CheckForAnyResult());
+
+                if (_resultsCheckingService.CheckForDraw())
+                {
+                    Console.WriteLine("Draw! Game over!");
                 }
                 else
                 {
-                    Console.WriteLine("{0}, make your move.", firstPlayer.Name);
-                    int positionToMove = Convert.ToInt32(Console.ReadLine());
-                    if (_board.BoardPositions[positionToMove] != firstPlayer.SymbolOnTheBoard &&
-                        _board.BoardPositions[positionToMove] != secondPlayer.SymbolOnTheBoard)
-                    {
-                        firstPlayer.MakeMove(positionToMove);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Sorry the position {0} is already taken! Try a diffrent position...", positionToMove);
-                    }
-                    currentPlayer++;
+                    Console.WriteLine(currentPlayer % 2 == 0
+                        ? string.Format("{0} won!", firstPlayer.Name)
+                        : string.Format("{0} won!", secondPlayer.Name));
+
                 }
-            } while (!_resultsCheckingService.CheckForAnyResult());
-
-            if (_resultsCheckingService.CheckForDraw())
-            {
-                Console.WriteLine("Draw! Game over!");
             }
-            else
+            catch (Exception exception)
             {
-                Console.WriteLine(currentPlayer % 2 == 0
-                    ? string.Format("{0} won!", firstPlayer.Name)
-                    : string.Format("{0} won!", secondPlayer.Name));
-
+                throw;
             }
 
         }

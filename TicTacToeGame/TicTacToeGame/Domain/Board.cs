@@ -13,6 +13,8 @@ namespace TicTacToeGame.Domain
 
         private void Draw()
         {
+            Console.WriteLine("To make a move, enter the number of the board position below:");
+            Console.WriteLine();
             Console.WriteLine("     |     |      ");
             Console.WriteLine("  {0}  |  {1}  |  {2}", BoardPositions[1], BoardPositions[2], BoardPositions[3]);
             Console.WriteLine("_____|_____|_____ ");

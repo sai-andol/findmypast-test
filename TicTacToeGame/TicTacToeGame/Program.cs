@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TicTacToeGame.Domain;
 using TicTacToeGame.Factories;
+using TicTacToeGame.Rules;
 using TicTacToeGame.Services;
 
 namespace TicTacToeGame
@@ -14,7 +15,7 @@ namespace TicTacToeGame
             var board = new Board();
             var players = RegisterPlayers(board);
             StartANewGame(players, board);
-            DoYouWantToPlayAgain(players, board);
+            DoYouWantToPlayAgain();
         }
 
         private static void Introduction()
@@ -59,13 +60,19 @@ namespace TicTacToeGame
 
         private static void StartANewGame(List<IPlayer> players, Board board)
         {
-            var resultsCheckingService = new ResultsCheckingService();
+            var diagonalWinningRule = new DiagonalWinningRule(board);
+            var horizantalWinningRule = new HorizantalWinningRule(board);
+            var verticalWinningRule = new VerticalWinningRule(board);
+            var gameIsADrawRule = new GameIsADrawRule(board, diagonalWinningRule, horizantalWinningRule, verticalWinningRule);
+
+            IResultsCheckingService resultsCheckingService = new ResultsCheckingService(gameIsADrawRule, diagonalWinningRule, horizantalWinningRule, verticalWinningRule);
             var game = new Game(board, resultsCheckingService);
             game.Play(players);
         }
 
-        private static void DoYouWantToPlayAgain(List<IPlayer> players, Board board)
+        private static void DoYouWantToPlayAgain()
         {
+
             bool wantToPlay;
             do
             {
@@ -77,9 +84,10 @@ namespace TicTacToeGame
                 Console.Clear();
                 if (wantToPlay)
                 {
+                    Board board = new Board();
+                    var players = RegisterPlayers(board);
                     StartANewGame(players, board);
                 }
-
             } while (wantToPlay);
         }
     }
