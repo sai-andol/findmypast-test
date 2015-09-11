@@ -11,9 +11,10 @@ namespace TicTacToeGame
         static void Main(string[] args)
         {
             Introduction();
-            var players = RegisterPlayers();
-            StartANewGame(players);
-            DoYouWantToPlayAgain(players);
+            var board = new Board();
+            var players = RegisterPlayers(board);
+            StartANewGame(players, board);
+            DoYouWantToPlayAgain(players, board);
         }
 
         private static void Introduction()
@@ -26,7 +27,7 @@ namespace TicTacToeGame
             Console.WriteLine();
         }
 
-        private static List<IPlayer> RegisterPlayers()
+        private static List<IPlayer> RegisterPlayers(Board board)
         {
             Console.WriteLine("Player-1: please enter your name");
             var player1Name = Console.ReadLine();
@@ -46,7 +47,7 @@ namespace TicTacToeGame
                 player2Symbol = Console.ReadKey();
             }
 
-            var playerFactory = new PlayerFactory();
+            var playerFactory = new PlayerFactory(board);
             var firstPlayer = playerFactory.Create(player1Name, player1Symbol.KeyChar);
             var secondPlayer = playerFactory.Create(player2Name, player2Symbol.KeyChar);
             Console.WriteLine();
@@ -56,15 +57,14 @@ namespace TicTacToeGame
             return new List<IPlayer> { firstPlayer, secondPlayer};
         }
 
-        private static void StartANewGame(List<IPlayer> players)
+        private static void StartANewGame(List<IPlayer> players, Board board)
         {
-            IBoard board = new Board();
             var resultsCheckingService = new ResultsCheckingService();
             var game = new Game(board, resultsCheckingService);
             game.Play(players);
         }
 
-        private static void DoYouWantToPlayAgain(List<IPlayer> players)
+        private static void DoYouWantToPlayAgain(List<IPlayer> players, Board board)
         {
             bool wantToPlay;
             do
@@ -77,7 +77,7 @@ namespace TicTacToeGame
                 Console.Clear();
                 if (wantToPlay)
                 {
-                    StartANewGame(players);
+                    StartANewGame(players, board);
                 }
 
             } while (wantToPlay);

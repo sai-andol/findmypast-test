@@ -23,5 +23,12 @@ namespace TicTacToeGame.Domain
             Console.WriteLine("  {0}  |  {1}  |  {2}", BoardPositions[7], BoardPositions[8], BoardPositions[9]);
             Console.WriteLine("     |     |      ");
         }
+
+        public void Update(int positionToMove, char symbolOnTheBoard)
+        {
+            Console.Clear();
+            BoardPositions[positionToMove] = symbolOnTheBoard;
+            Draw();
+        }
     }
 }

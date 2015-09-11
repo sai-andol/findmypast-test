@@ -11,7 +11,8 @@ namespace TicTacToeGameTests
         [Test]
         public void Create_GivenUsernameAndSymbol_ReturnsPlayerObject()
         {
-            var factory = new PlayerFactory();
+            IBoard board = new Board();
+            var factory = new PlayerFactory(board);
             string playerName = "Player1";
             char playerSymbol = 'X';
             var player = factory.Create(playerName,playerSymbol);
