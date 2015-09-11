@@ -55,7 +55,7 @@ namespace TicTacToeGame
             Console.WriteLine("Details registered. Press any key to begin playing!");
             Console.ReadKey(false);
 
-            return new List<IPlayer> { firstPlayer, secondPlayer};
+            return new List<IPlayer> { firstPlayer, secondPlayer };
         }
 
         private static void StartANewGame(List<IPlayer> players, Board board)
