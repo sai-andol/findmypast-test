@@ -48,9 +48,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DiagonalWinningRuleTests.cs" />
+    <Compile Include="GameIsADrawRuleTests.cs" />
     <Compile Include="GameTests.cs" />
+    <Compile Include="HorizantalWinningRuleTests.cs" />
     <Compile Include="PlayerFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VerticalWinningRuleTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

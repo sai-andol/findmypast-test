@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TicTacToeGame.Domain;
 using TicTacToeGame.Factories;
+using TicTacToeGame.Services;
 
 namespace TicTacToeGame
 {
@@ -58,7 +59,8 @@ namespace TicTacToeGame
         private static void StartANewGame(List<IPlayer> players)
         {
             IBoard board = new Board();
-            var game = new Game(board);
+            var resultsCheckingService = new ResultsCheckingService();
+            var game = new Game(board, resultsCheckingService);
             game.Play(players);
         }
 
